@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .button {
+            padding: 4px 8px;
+
+            border: 1px solid black;
+            border-radius: 3px;
+            background-color: white;
+        }
+
+        .promo {
+            background-color: #fc0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Document Object Model</h1>
+    <button class="button count-button">Кнопка (0)</button>
+    <div class="time">
+        <div>
+            <button class="button promo count-button time__button">Кнопка (0)</button>
+        </div>
+        <div>
+            <div class="time__time"></div>
+        </div>
+    </div>
+    <button class="button">Кнопка</button>
+    <button class="button promo">Кнопка</button>
+    <button class="button delete-button">Удалить всех!!!!</button>
+    <script>
+        function handleCountButtonClick() {
+            let count = this.dataset.clicks ?
+                +this.dataset.clicks :
+                0;
+
+                this.textContent =
+                this.textContent.replace(`(${count})`, `(${count + 1})`);
+
+            count += 1;
+            this.dataset.clicks = count;
+        }
+
+        const countButtons = document.querySelectorAll('.count-button');
+
+        countButtons.forEach(countButton => {
+            countButton.onclick = handleCountButtonClick;
+        });
+
+        const timeButton = document.querySelector('.time__button');
+
+        timeButton.onmouseenter = function() {
+            const timeBlock = timeButton.closest('.time');
+
+            const timeTime = timeBlock.querySelector('.time__time');
+
+            timeTime.textContent = Date.now();
+        }
+
+        const deleteButton = document.querySelector('.delete-button');
+
+        deleteButton.onclick = () => {
+            const parent = deleteButton.parentElement;
+
+            let child = parent.firstElementChild;
+
+            while(child) {
+                const itemToDelete = child;
+
+                child = child.nextElementSibling;
+
+                itemToDelete.remove();
+            }
+        };
+    </script>
+</body>
+</html>
